@@ -8,25 +8,34 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "clients")
-@Access(AccessType.PROPERTY)
+@Access(AccessType.FIELD)
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @NotNull
     @Size(min = 2,max = 100)
+    @Column(name = "name")
     private String name;
 
     @NotNull
+    @Column(name = "phone")
     private String phone;
 
     @NotNull
     @Email
+    @Column(name = "email")
     private String email;
 
     @NotNull
+    @Column(name = "passport_number")
     private String passportNumber;
+
+    @ManyToOne
+    @JoinColumn(name = "BANK_ID")
+    private Bank bank;
 
     public Long getId() {
         return id;
@@ -66,5 +75,13 @@ public class Client {
 
     public void setPassportNumber(String passportNumber) {
         this.passportNumber = passportNumber;
+    }
+
+    public Bank getBank() {
+        return bank;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
     }
 }

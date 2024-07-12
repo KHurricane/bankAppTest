@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/loan-offers")
+@RequestMapping("/loan_offers")
 public class LoanOfferController {
     @Autowired
     private LoanOfferService loanOfferService;
@@ -26,11 +26,16 @@ public class LoanOfferController {
     private CreditService creditService;
 
     @PostMapping
-    public LoanOffer createLoanOffer(@RequestParam Long clientId, @RequestParam Long creditId, @RequestParam BigDecimal loanAmount) {
+    public void createLoanOffer(@RequestParam Long clientId, @RequestParam Long creditId, @RequestParam BigDecimal loanAmount) {
         Client client = clientService.getClientById(clientId);
         Credit credit = creditService.getCreditById(creditId);
 
-        return loanOfferService.createLoanOffer(client, credit, loanAmount);
+        loanOfferService.createLoanOffer(client, credit, loanAmount);
+    }
+    @PutMapping("/{id}")
+    public void updateLoanOffer(@PathVariable Long id, @RequestBody LoanOffer loanOffer){
+        loanOffer.setId(id);
+        loanOfferService.updateLoanOffer(loanOffer);
     }
 
     @GetMapping

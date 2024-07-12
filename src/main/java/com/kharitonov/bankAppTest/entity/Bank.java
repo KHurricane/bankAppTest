@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "banks")
-@Access(AccessType.PROPERTY)
+@Access(AccessType.FIELD)
 public class Bank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

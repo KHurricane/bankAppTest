@@ -24,14 +24,14 @@ public class ClientController {
     }
 
     @PostMapping
-    public Client createClient(@RequestBody Client client) {
-        return clientService.saveClient(client);
+    public void createClient(@RequestBody Client client) {
+        clientService.saveClient(client);
     }
 
     @PutMapping("/{id}")
-    public Client updateClient(@PathVariable Long id, @RequestBody Client client) {
+    public void updateClient(@PathVariable Long id, @RequestBody Client client) {
         client.setId(id);
-        return clientService.saveClient(client);
+        clientService.updateClient(client);
     }
 
     @DeleteMapping("/{id}")

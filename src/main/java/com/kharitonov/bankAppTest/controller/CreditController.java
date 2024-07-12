@@ -24,14 +24,14 @@ public class CreditController {
     }
 
     @PostMapping
-    public Credit createCredit(@RequestBody Credit credit) {
-        return creditService.saveCredit(credit);
+    public void createCredit(@RequestBody Credit credit) {
+        creditService.saveCredit(credit);
     }
 
     @PutMapping("/{id}")
-    public Credit updateCredit(@PathVariable Long id, @RequestBody Credit credit) {
+    public void updateCredit(@PathVariable Long id, @RequestBody Credit credit) {
         credit.setId(id);
-        return creditService.saveCredit(credit);
+        creditService.saveCredit(credit);
     }
 
     @DeleteMapping("/{id}")

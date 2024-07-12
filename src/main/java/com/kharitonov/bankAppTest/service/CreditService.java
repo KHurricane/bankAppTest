@@ -1,7 +1,9 @@
 package com.kharitonov.bankAppTest.service;
 
+import com.kharitonov.bankAppTest.entity.Client;
 import com.kharitonov.bankAppTest.entity.Credit;
-import com.kharitonov.bankAppTest.repository.CreditRepository;
+
+import com.kharitonov.bankAppTest.repository.impl.CreditRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,16 +15,21 @@ public class CreditService {
     private CreditRepository creditRepository;
 
     public List<Credit> getAllCredits() {
-        return creditRepository.findAll();
+        return creditRepository.getAllCredits();
     }
 
     public Credit getCreditById(Long id) {
-        return creditRepository.findById(id).orElse(null);
+        return creditRepository.getById(id);
     }
 
-    public Credit saveCredit(Credit credit) {
-        return creditRepository.save(credit);
+    public void saveCredit(Credit credit) {
+        creditRepository.createById(credit);
     }
+
+    public void updateClient(Credit credit){
+        creditRepository.updateById(credit);
+    }
+
 
     public void deleteCredit(Long id) {
         creditRepository.deleteById(id);

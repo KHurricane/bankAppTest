@@ -10,10 +10,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "loan_offers")
-@Access(AccessType.PROPERTY)
+@Access(AccessType.FIELD)
 public class LoanOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne
@@ -25,6 +26,7 @@ public class LoanOffer {
     private Credit credit;
 
     @NotNull
+    @Column(name = "loan_amount")
     private BigDecimal loanAmount;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "loanOffer")
@@ -71,16 +73,20 @@ public class LoanOffer {
     }
 
     @Entity
-    @Table(name = "payment_shedules")
-    @Access(AccessType.PROPERTY)
+    @Table(name = "payment_schedules")
+    @Access(AccessType.FIELD)
     public static class PaymentSchedule {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "id")
         private Long id;
-
+        @Column(name = "payment_date")
         private Date paymentDate;
+        @Column(name = "payment_amount")
         private BigDecimal paymentAmount;
+        @Column(name = "principal_amount")
         private BigDecimal principalAmount;
+        @Column(name = "interest_amount")
         private BigDecimal interestAmount;
 
         @ManyToOne
