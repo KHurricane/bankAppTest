@@ -1,6 +1,8 @@
 package com.kharitonov.bankAppTest.controller;
 
+import com.kharitonov.bankAppTest.entity.Client;
 import com.kharitonov.bankAppTest.entity.Credit;
+import com.kharitonov.bankAppTest.service.ClientService;
 import com.kharitonov.bankAppTest.service.CreditService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +14,8 @@ import java.util.List;
 public class CreditController {
     @Autowired
     private CreditService creditService;
-
+    @Autowired
+    private ClientService clientService;
     @GetMapping
     public List<Credit> getAllCredits() {
         return creditService.getAllCredits();
@@ -33,6 +36,10 @@ public class CreditController {
         credit.setId(id);
         creditService.saveCredit(credit);
     }
+
+
+
+
 
     @DeleteMapping("/{id}")
     public void deleteCredit(@PathVariable Long id) {

@@ -1,5 +1,8 @@
 package com.kharitonov.bankAppTest.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -29,6 +32,11 @@ public class LoanOffer {
     @Column(name = "loan_amount")
     private BigDecimal loanAmount;
 
+    @NotNull
+    @Column(name = "total_interest")
+    private BigDecimal totalInterest;
+
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "loanOffer")
     private List<PaymentSchedule> paymentSchedules = new ArrayList<>();
 
@@ -72,6 +80,14 @@ public class LoanOffer {
         this.paymentSchedules = paymentSchedules;
     }
 
+    public BigDecimal getTotalInterest() {
+        return totalInterest;
+    }
+
+    public void setTotalInterest(BigDecimal totalInterest) {
+        this.totalInterest = totalInterest;
+    }
+
     @Entity
     @Table(name = "payment_schedules")
     @Access(AccessType.FIELD)
@@ -91,6 +107,7 @@ public class LoanOffer {
 
         @ManyToOne
         @JoinColumn(name = "loan_offer_id")
+        @JsonBackReference
         private LoanOffer loanOffer;
 
         public Long getId() {

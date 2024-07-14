@@ -17,8 +17,8 @@ public class CreditRepository {
         return em.find(Credit.class, id);
     }
     @Transactional
-    public void deleteById(Long id) {
-        em.remove(id);
+    public void deleteById(Credit credit) {
+        em.remove(credit);
     }
 
     @Transactional
@@ -33,4 +33,6 @@ public class CreditRepository {
     public List<Credit> getAllCredits() {
         return em.createQuery(GET_ALL, Credit.class).getResultList();
     }
+
+
 }

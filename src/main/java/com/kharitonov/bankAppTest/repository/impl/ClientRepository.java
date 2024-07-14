@@ -18,8 +18,8 @@ public class ClientRepository {
     }
 
     @Transactional
-    public void deleteById(Long id) {
-        em.remove(id);
+    public void deleteById(Client client) {
+        em.remove(client);
     }
 
     @Transactional

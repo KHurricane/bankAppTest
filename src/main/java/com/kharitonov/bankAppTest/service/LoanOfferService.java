@@ -34,18 +34,26 @@ public class LoanOfferService {
         loanOffer.setClient(client);
         loanOffer.setCredit(credit);
         loanOffer.setLoanAmount(loanAmount);
-
         BigDecimal totalInterest = calculatePaymentSchedule(loanOffer, loanAmount, credit.getInterestRate());
+        loanOffer.setTotalInterest(totalInterest);
 
         loanOfferRepository.createById(loanOffer);
     }
 
 
+    /**
+     * Рассчитывает график платежей для кредитного предложения.
+     *
+     * @param loanOffer  Кредитное предложение, для которого нужно рассчитать график платежей.
+     * @param loanAmount Сумма кредита.
+     * @param annualRate Годовая процентная ставка.
+     * @return Общая сумма процентов, уплаченных по кредиту.
+     */
     private BigDecimal calculatePaymentSchedule(LoanOffer loanOffer, BigDecimal loanAmount, BigDecimal annualRate) {
         List<LoanOffer.PaymentSchedule> paymentSchedules = new ArrayList<>();
         BigDecimal monthlyRate = annualRate.divide(BigDecimal.valueOf(12), RoundingMode.HALF_UP);
         BigDecimal totalInterest = BigDecimal.ZERO;
-
+// Цикл для расчета ежемесячных платежей на 12 месяцев
         for (int i = 1; i <= 12; i++) {
             LoanOffer.PaymentSchedule schedule = new LoanOffer.PaymentSchedule();
             schedule.setPaymentDate(getNextMonthDate(i)); // Установка правильной даты для каждого месяца
@@ -58,21 +66,27 @@ public class LoanOfferService {
             schedule.setInterestAmount(interestAmount);
             schedule.setLoanOffer(loanOffer);
 
-            paymentSchedules.add(schedule);
+            paymentSchedules.add(schedule); // Добавление текущего графика в список
             totalInterest = totalInterest.add(interestAmount);
         }
 
-        loanOffer.setPaymentSchedules(paymentSchedules);
+        loanOffer.setPaymentSchedules(paymentSchedules);// Установка списка графиков платежей для кредитного предложения
         return totalInterest;
     }
 
+    /**
+     * Возвращает дату для следующего месяца на основе текущей даты.
+     *
+     * @param month Количество месяцев, на которое нужно сместить текущую дату.
+     * @return Дата следующего месяца.
+     */
     private Date getNextMonthDate(int month) {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.MONTH, month);
         return cal.getTime();
     }
 
-    public void updateLoanOffer(LoanOffer loanOffer){
+    public void updateLoanOffer(LoanOffer loanOffer) {
         loanOfferRepository.updateById(loanOffer);
     }
 
@@ -85,6 +99,13 @@ public class LoanOfferService {
     }
 
     public void deleteLoanOffer(Long id) {
-        loanOfferRepository.deleteById(id);
+        LoanOffer loanOffer = loanOfferRepository.getById(id);
+        loanOfferRepository.deleteById(loanOffer);
     }
+
+    public List<LoanOffer> getAllLoanOffersByClientId(Long clientId) {
+        return loanOfferRepository.getAllOffersByClientId(clientId);
+    }
+
+
 }

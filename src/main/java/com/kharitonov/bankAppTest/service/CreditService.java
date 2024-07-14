@@ -31,7 +31,10 @@ public class CreditService {
     }
 
 
+
+
     public void deleteCredit(Long id) {
-        creditRepository.deleteById(id);
+        Credit credit = creditRepository.getById(id);
+        creditRepository.deleteById(credit);
     }
 }

@@ -30,6 +30,7 @@ public class ClientService {
     }
 
     public void deleteClient(Long id) {
-        clientRepository.deleteById(id);
+        Client client = clientRepository.getById(id);
+        clientRepository.deleteById(client);
     }
 }

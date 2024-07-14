@@ -52,4 +52,9 @@ public class LoanOfferController {
     public void deleteLoanOffer(@PathVariable Long id) {
         loanOfferService.deleteLoanOffer(id);
     }
+    @GetMapping("/client/{clientId}")
+    public List<LoanOffer> getAllLoanOffersByClientId(@PathVariable Long clientId) {
+        return loanOfferService.getAllLoanOffersByClientId(clientId);
+    }
+
 }

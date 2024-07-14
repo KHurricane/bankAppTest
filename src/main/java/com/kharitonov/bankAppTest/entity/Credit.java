@@ -56,4 +56,6 @@ public class Credit {
     public void setBank(Bank bank) {
         this.bank = bank;
     }
+
+
 }
